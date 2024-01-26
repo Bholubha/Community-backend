@@ -1,6 +1,9 @@
+
 const asyncHandler = require("express-async-handler");
 const User = require('../Models/userModel');
 const {Snowflake} = require('@theinternetfolks/snowflake')
+const Validator = require('validator');
+
 //console.log(Snowflake.generate())
 
 
@@ -10,6 +13,22 @@ const registerUser   = asyncHandler(async (req,res)=>{
    if(!name || !password || !email){
     res.status(400);
     throw new Error("All Fields are mendatory");
+}
+
+// Validate mail first
+const validEmail = Validator.isEmail(email);
+if(!validEmail){
+    res.status(400).send({
+        "status": false,
+        "errors": [
+          {
+            "param": "email",
+            "message": "Enter Valid Email.",
+            "code": "INVALID_DATA"
+          }
+        ]
+      });
+   exit(0);
 }
 
 const availableUser = await User.findOne({email});
@@ -28,10 +47,14 @@ if (availableUser){
    exit(0);
 }
 
-console.log(req.body);
+// console.log(req.body);
+
+// let ID = Snowflake.generate();
+// console.log(ID)
+// ID = "7156611680346055732"
 
 const user = await User.create({
-    _id : Snowflake.generate().toString(),
+    _id : Snowflake.generate(),
     name,
     email,
   password
@@ -39,7 +62,7 @@ const user = await User.create({
 
 if(user){
     res.json({
-        _id : user.id,
+        _id : user._id,
         email : user.email,
     })
 }else{

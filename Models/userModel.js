@@ -1,9 +1,11 @@
+
+
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
     _id : {
         type : String,
-        unique: true,
+        
     },
 
     name : {
@@ -27,6 +29,6 @@ const userSchema = mongoose.Schema({
     timestamps : true,
 });
 
-// userSchema.set('primary', '_id');
+// userSchema.set('primary', 'id');
 
 module.exports = mongoose.model("User",userSchema);
