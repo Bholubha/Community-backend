@@ -3,8 +3,9 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-    _id : {
+    id : {
         type : String,
+        unique : true
         
     },
 
