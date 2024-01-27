@@ -1,0 +1,10 @@
+Credential For User
+
+email : bhautik@gmail.com
+password : bhautik123
+
+email : raj@gmail.com
+password : raj123
+
+email : jay@gmail.com
+password : jay123
